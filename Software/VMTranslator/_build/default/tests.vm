@@ -1,0 +1,199 @@
+// tests.vm
+//
+// A collection of JACK VM programs to test your VM
+// to ASM translator
+
+
+// if n mod 2 = 0, then midpoint n = n/2
+// else, midpoint n = (n-1)/2
+function midpoint 0
+    push argument 0
+    push constant 2
+    lt
+    if-goto base
+    push argument 0
+    push constant 2
+    sub
+    call midpoint 1
+    push constant 1
+    add
+    return
+
+    label base
+    push constant 0
+    return
+
+// iteratively multiplies two numbers
+function iter_mul 3
+    push argument 0
+    pop local 0
+    push argument 1
+    pop local 1
+    push constant 0
+    pop local 2
+
+    label START
+    push local 1
+    push constant 0
+    eq
+    if-goto END
+    push local 0
+    push local 2
+    add
+    pop local 2
+    push local 1
+    push constant 1
+    sub
+    pop local 1
+    goto START
+
+    label END
+    push local 2
+    return
+
+// recursively multiplies two numbers
+function rec_mul 0
+    push argument 0
+    push constant 0
+    eq
+    if-goto base_case
+    
+    push argument 0
+    push constant 1
+    sub
+    push argument 1
+    call rec_mul 2
+    push argument 1
+    add
+    return
+
+    label base_case
+    push constant 0
+    return
+
+// messed up function which works like this :
+// to calculate x.y, first calculate p1 and p2 as follows
+//          p1 = midpoint x
+//          p2 = x - (midpoint x)           [ evaluated in a very roundabout way ]
+// calculate y.p1, using the iterative multiplication function
+// calculate y.p2, using the recursive multiplication function
+// add y.p1 and y.p2, to get x.y
+function megamul 4
+    push argument 0
+    push argument 1
+    pop local 1
+    pop local 0
+    push local 0
+    call midpoint 1
+    pop local 2
+    push local 2
+    push local 2
+    add
+    push local 0
+    eq
+    if-goto valid
+    push local 2
+    push constant 1
+    add
+    pop local 3
+    goto endvalidation
+
+    label valid
+    push local 2
+    pop local 3
+
+    label endvalidation
+    
+    push local 1
+    push local 2
+    call iter_mul 2
+    push local 1
+    push local 3
+    call rec_mul 2
+    add
+    return
+
+// iterative fibonacci function
+function iter_fib 3
+    push constant 0
+    pop local 0
+    push constant 1
+    pop local 1
+    push argument 0
+    pop local 2
+    
+    label START
+    push local 2
+    push constant 0
+    eq
+    if-goto END
+    push local 0
+    push local 1
+    add
+    pop local 1
+    push local 1
+    push local 0
+    sub
+    pop local 0
+    push local 2
+    push constant 1
+    sub
+    pop local 2
+    goto START
+
+    label END
+    push local 0
+    return
+
+// recursive fibonacci function
+function rec_fib 0
+    push argument 0
+    push constant 0
+    eq
+    if-goto RETURN_ZERO
+    push argument 0
+    push constant 1
+    eq
+    if-goto RETURN_ONE
+    push argument 0
+    push constant 1
+    sub
+    call rec_fib 1
+    push argument 0
+    push constant 2
+    sub
+    call rec_fib 1
+    add
+    return
+
+    label RETURN_ZERO
+    push constant 0
+    return
+
+    label RETURN_ONE
+    push constant 1
+    return
+
+// recursive factorial function, using the
+// megamul function for multplication
+function factorial 0
+    push argument 0
+    push constant 1
+    lt
+    if-goto END
+    push argument 0
+    push argument 0
+    push constant 1
+    sub
+    call factorial 1
+    call megamul 2
+    return
+
+    label END
+    push constant 1
+    return
+
+// the main function
+function Main.main 0
+    push constant 42
+    return

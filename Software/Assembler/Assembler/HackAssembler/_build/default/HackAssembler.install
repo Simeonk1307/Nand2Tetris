@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/HackAssembler/META"
+  "_build/install/default/lib/HackAssembler/dune-package"
+  "_build/install/default/lib/HackAssembler/opam"
+]
+bin: [
+  "_build/install/default/bin/HackAssembler"
+]

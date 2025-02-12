@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/vmtranslator/META"
+  "_build/install/default/lib/vmtranslator/dune-package"
+  "_build/install/default/lib/vmtranslator/opam"
+]
+bin: [
+  "_build/install/default/bin/vmtranslator"
+]

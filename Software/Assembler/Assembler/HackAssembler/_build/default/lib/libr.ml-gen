@@ -1,0 +1,10 @@
+(** @canonical Libr.Ast *)
+module Ast = Libr__Ast
+
+
+(** @canonical Libr.Machine *)
+module Machine = Libr__Machine
+
+
+(** @canonical Libr.Parser *)
+module Parser = Libr__Parser

@@ -1,0 +1,18 @@
+(** @canonical Vmtranslator.Hackast *)
+module Hackast = Vmtranslator__Hackast
+
+
+(** @canonical Vmtranslator.Hackmachine *)
+module Hackmachine = Vmtranslator__Hackmachine
+
+
+(** @canonical Vmtranslator.Vmast *)
+module Vmast = Vmtranslator__Vmast
+
+
+(** @canonical Vmtranslator.Vmcodewriter *)
+module Vmcodewriter = Vmtranslator__Vmcodewriter
+
+
+(** @canonical Vmtranslator.Vmparser *)
+module Vmparser = Vmtranslator__Vmparser
